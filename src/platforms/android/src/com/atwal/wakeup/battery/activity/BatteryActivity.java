@@ -47,6 +47,13 @@ import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.facebook.ads.NativeAd;
 import com.thehotgame.bottleflip.R;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.NativeExpressAdView;
+import com.google.android.gms.ads.VideoController;
+import com.google.android.gms.ads.VideoOptions;
 import android.net.Uri;
 import android.widget.Toast;
 
@@ -153,7 +160,7 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
         if (bFbAdFirst) {
             initAd();
         } else {
-            initAd();
+            initAdmob();
         }
         registerBatteryReceiver();
         initEvent();
@@ -264,6 +271,7 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
                     showAdsAnim();
                 } catch (Exception e) {
                     if (bFbAdFirst) {
+                        initAdmob();
                     }
                 }
             }
@@ -272,6 +280,7 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
             public void onNativeAdLoadError(AdError adError) {
                 Log.d("screenLock", "fb ad error:" + adError.getErrorMessage());
                 if (bFbAdFirst) {
+                    initAdmob();
                 }
             }
 
@@ -281,6 +290,66 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
                 removeAdsAnim(false);
             }
         });
+    }
+
+    private void initAdmob() {
+        Log.d("screenLock", "try to load admob ad");
+        bShowAdmob = true;
+        if (mDragAdViewLayout == null) {
+            mDragAdViewLayout = (FrameLayout) findViewById(R.id.battery_main_drag_layout);
+        }
+        mDragAdViewLayout.setVisibility(View.GONE);
+        LinearLayout adWrap = (LinearLayout) findViewById(R.id.ad_wrap);
+        final NativeExpressAdView adView = new NativeExpressAdView(BatteryActivity.this);
+        if (AdUtil.ADMOB_ID.contains("ADMOBID")) {
+            Toast.makeText(this, "ADMOB id error", Toast.LENGTH_LONG).show();
+            return;
+        }
+        adView.setAdUnitId(AdUtil.ADMOB_ID);
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int screenWidth = dm.widthPixels;
+        float density1 = dm.density;
+        int screenWidthDp = (int) (screenWidth / density1 + 0.5f) - 32;
+        AdSize adSize = new AdSize(screenWidthDp, 340);
+        adView.setAdSize(adSize);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(0, (int) (20 * density1), 0, 0);
+        adWrap.addView(adView, lp);
+
+        adView.setVideoOptions(new VideoOptions.Builder().setStartMuted(true).build());
+        final VideoController mVideoController = adView.getVideoController();
+        mVideoController.setVideoLifecycleCallbacks(new VideoController.VideoLifecycleCallbacks() {
+            @Override
+            public void onVideoEnd() {
+                Log.d("screenLock", "Video playback is finished.");
+                super.onVideoEnd();
+            }
+        });
+
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                if (mVideoController.hasVideoContent()) {
+                    Log.d("screenLock", "Received an ad that contains a video asset.");
+                } else {
+                    Log.d("screenLock", "Received an ad that does not contain a video asset.");
+                }
+            }
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                if (!bFbAdFirst) {
+                    adView.setVisibility(View.GONE);
+                    initAd();
+                }
+            }
+        });
+
+        AdRequest request = new AdRequest.Builder().build();
+        adView.loadAd(request);
     }
 
     private boolean isShowAd() {
