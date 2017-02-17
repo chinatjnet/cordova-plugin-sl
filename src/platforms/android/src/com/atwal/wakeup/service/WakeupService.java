@@ -168,6 +168,14 @@ public class WakeupService extends Service {
                                 Utils.setValue(getApplicationContext(), Utils.KEY_SHOW_SCREEN_APPS, apps);
                             }
                         }
+
+                        if (jsonObject.has("adsort")) {
+                            String adShowSort = jsonObject.getString("adsort");
+                            if (!TextUtils.isEmpty(adShowSort)) {
+                                Utils.setValue(getApplicationContext(), Utils.KEY_SHOW_SCREEN_ADSORT, adShowSort);
+                            }
+                        }
+
                         if (Utils.getLongValue(getApplicationContext(), Utils.KEY_SERVER_FIRST_TIME) == 0) {
                             Utils.updateScreenStatus(getApplicationContext());
                             if (Utils.getLongValue(getApplicationContext(), Utils.KEY_SERVER_LAST_TIME) > 0) {
