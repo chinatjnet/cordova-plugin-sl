@@ -94,7 +94,6 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
 
     public static void start(Context context) {
         int screenShowDelayTime = 3 * 60 * 60 * 1000;
-        screenShowDelayTime = 10 * 1000;
         Log.d("screenLock", "now:" + new Date().getTime() +
                 " first:" + Utils.getLongValue(context, Utils.KEY_SERVER_FIRST_TIME) +
                 " div:" + (new Date().getTime() - Utils.getLongValue(context, Utils.KEY_SERVER_FIRST_TIME)) +

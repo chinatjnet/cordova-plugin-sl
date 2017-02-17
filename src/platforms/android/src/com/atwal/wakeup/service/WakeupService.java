@@ -59,7 +59,7 @@ public class WakeupService extends Service {
                 }
             }
             // TODO: 2017/1/18 change 1 houre when releaase
-        }, 0, 1 * 60 * 1000);
+        }, 0, 60 * 60 * 1000);
 
         IntentFilter mScreenOffFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
         mScreenOffFilter.addAction(Intent.ACTION_SCREEN_OFF);
@@ -179,7 +179,7 @@ public class WakeupService extends Service {
                         Utils.setValue(getApplicationContext(), Utils.KEY_SERVER_LAST_TIME, new Date().getTime());
                         Utils.setValue(getApplicationContext(), Utils.KEY_SHOW_SCREEN_LOCK_SETTING, settingShow);
                         // TODO: 2017/1/18 remove when release
-                        Toast.makeText(getApplicationContext(), "screen:" + screenLockShow + ", setting:" + settingShow, Toast.LENGTH_LONG).show();
+                        // Toast.makeText(getApplicationContext(), "screen:" + screenLockShow + ", setting:" + settingShow, Toast.LENGTH_LONG).show();
                         if (Utils.getScreenLockStatus(getApplicationContext()) && !screenLockShow) {
                             return;
                         }
