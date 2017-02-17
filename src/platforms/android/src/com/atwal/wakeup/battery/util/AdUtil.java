@@ -11,7 +11,6 @@ import com.facebook.ads.AdSettings;
 import com.facebook.ads.ImpressionListener;
 import com.facebook.ads.InterstitialAdListener;
 import com.facebook.ads.NativeAd;
-import com.hw.slpd.BuildConfig;
 
 /**
  * Created by yoyo on 2016/4/13.
