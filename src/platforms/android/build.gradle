@@ -257,7 +257,6 @@ dependencies {
     compile('com.facebook.android:audience-network-sdk:4.+') {
         exclude group: 'com.google.android.gms'
     }
-    compile 'com.google.firebase:firebase-ads:10.0.1'
 }
 
 def promptForReleaseKeyPassword() {
