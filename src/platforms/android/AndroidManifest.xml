@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hw.test"
+    android:hardwareAccelerated="true"
+    android:versionCode="10000"
+    android:versionName="1.0.0">
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
+
+    <application
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:supportsRtl="true">
+        <activity
+            android:name="MainActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+            android:label="@string/activity_name"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.DeviceDefault.NoActionBar"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter android:label="@string/launcher_name">
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.atwal.wakeup.splash.PermissionsActivity" />
+
+        <service
+            android:name="com.atwal.wakeup.service.WakeupService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="com.atwal.wakeup.service.WakeupService$WakeupInnerService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name="com.atwal.wakeup.receiver.WakeupReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_OFF" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.atwal.wakeup.battery.activity.BatteryActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:taskAffinity="com.abclauncher.battery.task"
+            android:theme="@style/BatteryLockScreenStyle" />
+
+        <service
+            android:name="com.atwal.wakeup.battery.service.BatteryService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.abclauncher.battery.Service" />
+            </intent-filter>
+        </service>
+
+        <receiver android:name="com.atwal.wakeup.battery.receiver.PhoneCallReceiver">
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </receiver>
+    </application>
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="25" />
+</manifest>

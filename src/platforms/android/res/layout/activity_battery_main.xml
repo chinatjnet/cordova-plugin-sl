@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/battery_charging_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/battery_main_layout_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/battery_bg_color" />
+
+    <LinearLayout
+        android:id="@+id/ll_fixed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/battery_appname"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="16dp"
+            android:gravity="center_vertical"
+            android:textColor="#4effffff"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/battery_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="280dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="280dp"
+            android:layout_marginTop="-40dp"
+            android:drawableRight="@drawable/ic_more_vert_white_24dp" />
+
+        <TextView
+            android:id="@+id/battery_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="roboto"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:shadowColor="#66000000"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="6"
+            android:singleLine="true"
+            android:textColor="@android:color/white"
+            android:textSize="72sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/battery_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:shadowColor="#66000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="1"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/battery_charging_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:drawableLeft="@drawable/icon_screen_charge"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <com.atwal.wakeup.battery.view.MyScrollview
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_fixed"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="100dp"
+        android:fadingEdge="none"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/ad_wrap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="vertical">
+
+            <include layout="@layout/include_battery_charging_state" />
+
+            <include
+                layout="@layout/include_battery_ad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="28dp" />
+
+        </LinearLayout>
+    </com.atwal.wakeup.battery.view.MyScrollview>
+
+    <com.atwal.wakeup.battery.view.FlashTextView
+        android:id="@+id/unlock_tips_text"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:drawablePadding="5dp"
+        android:drawableRight="@drawable/lc_btn_unlocker"
+        android:gravity="center"
+        android:text="@string/lc_unlock_tips"
+        android:textColor="@color/unlock_tips_text_color"
+        android:textSize="20sp" />
+
+</android.support.percent.PercentRelativeLayout>

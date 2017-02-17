@@ -1,0 +1,23 @@
+<resources>
+    <string name="help">助けます</string>
+    <string name="string_help_text">ヘルプ目次</string>
+    <string name="quit">出 口</string>
+    <string name="settings">設 定</string>
+    <string name="battery_full_time_start_text">残りの充電を完了</string>
+    <plurals name="battery_full_time_hour">
+        <item quantity="one">%1$d 時間</item>
+        <item quantity="other">%1$d 時間</item>
+    </plurals>
+    <plurals name="battery_full_time_minute">
+        <item quantity="one">%1$d 分</item>
+        <item quantity="other">%1$d 分</item>
+    </plurals>
+    <string name="battery_is_full">充電は充電器の完全な切断であります
+</string>
+    <!-- add by wl -->
+    <string name="battery_preferences_summary">オープンバッテリーは充電速度を加速するために画面をロック</string>
+    <string name="lc_unlock_tips">スライドロックを解除します</string>
+
+    <string name="flashlight_error">カメラが起動に失敗しました!</string>
+    <string name="smartlock">スマートロック画面</string>
+</resources>

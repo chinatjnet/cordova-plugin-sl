@@ -1,0 +1,22 @@
+<resources>
+    <string name="help">Hilfe</string>
+    <string name="string_help_text">Hilfe Inhalt</string>
+    <string name="quit">verlassen</string>
+    <string name="settings">Einstellungen</string>
+    <string name="battery_full_time_start_text">Volle Ladung nach links</string>
+    <plurals name="battery_full_time_hour">
+        <item quantity="one">%1$d Uhr</item>
+        <item quantity="other">%1$d Uhrs</item>
+    </plurals>
+    <plurals name="battery_full_time_minute">
+        <item quantity="one">%1$d Minuten</item>
+        <item quantity="other">%1$d Minuten</item>
+    </plurals>
+    <string name="battery_is_full">Voll aufgeladen Ziehen Sie den Netzstecker</string>
+    <!-- add by wl -->
+    <string name="battery_preferences_summary">Verwenden Sie Batteriestatus-Sperrbildschirm, um Ihre Aufladegeschwindigkeit zu beschleunigen</string>
+    <string name="lc_unlock_tips">Schieben Sie zum Entsperren</string>
+
+    <string name="flashlight_error">Kamera geöffnet fehlgeschlagen!</string>
+    <string name="smartlock">Smart Bildschirmschloss</string>
+</resources>

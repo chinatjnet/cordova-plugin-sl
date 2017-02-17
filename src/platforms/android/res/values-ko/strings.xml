@@ -1,0 +1,22 @@
+<resources>
+    <string name="help">도와주세요</string>
+    <string name="string_help_text">도움말 내용</string>
+    <string name="quit">출구</string>
+    <string name="settings">환경</string>
+    <string name="battery_full_time_start_text">남아있는 충전 완료</string>
+    <plurals name="battery_full_time_hour">
+        <item quantity="one">%1$d 시간</item>
+        <item quantity="other">%1$d 시간</item>
+    </plurals>
+    <plurals name="battery_full_time_minute">
+        <item quantity="one">%1$d 분</item>
+        <item quantity="other">%1$d 분</item>
+    </plurals>
+    <string name="battery_is_full">충전은 충전기 완전한 분리입니다</string>
+    <!-- add by wl -->
+    <string name="battery_preferences_summary">오픈 배터리가 충전 속도를 가속화하기 위해 화면을 잠글</string>
+    <string name="lc_unlock_tips">슬라이드 잠금 해제</string>
+
+    <string name="flashlight_error">열기, 시스템 설정 권한에 카메라를 켜 실패</string>
+    <string name="smartlock">스마트 잠금 화면</string>
+</resources>

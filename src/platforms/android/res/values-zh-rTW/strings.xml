@@ -1,0 +1,20 @@
+<resources>
+    <string name="help">幫 助</string>
+    <string name="string_help_text">幫助內容</string>
+    <string name="quit">退 出</string>
+    <string name="settings">設 置</string>
+    <string name="battery_full_time_start_text">充電完成剩餘</string>
+    <plurals name="battery_full_time_hour">
+        <item quantity="one">%1$d 小時</item>
+        <item quantity="other">%1$d 小時</item>
+    </plurals>
+    <plurals name="battery_full_time_minute">  
+        <item quantity="one">%1$d 分鐘</item>
+        <item quantity="other">%1$d 分鐘</item>
+    </plurals>
+    <string name="battery_is_full">充電完成拔下充電器</string>
+    <string name="battery_preferences_summary">開啟電量鎖屏加速你的充電速度</string>
+    <string name="lc_unlock_tips">滑動解鎖</string>
+    <string name="flashlight_error">開啟失敗，請在系統設置中開啟相機權限</string>
+    <string name="smartlock">智能鎖屏</string>
+</resources>

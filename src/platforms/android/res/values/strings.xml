@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name" translatable="false">ctest</string>
+    <string name="launcher_name" translatable="false">@string/app_name</string>
+    <string name="activity_name" translatable="false">@string/launcher_name</string>
+    <string name="help">Help</string>
+    <string name="string_help_text">help content</string>
+    <string name="quit">quit</string>
+    <string name="settings">settings</string>
+    <string name="battery_full_time_start_text">Fully charge left</string>
+    <plurals name="battery_full_time_hour">
+        <item quantity="one">%1$d hour</item>
+        <item quantity="other">%1$d hours</item>
+    </plurals>
+    <plurals name="battery_full_time_minute">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="other">%1$d minutes</item>
+    </plurals>
+    <string name="battery_is_full">Fully charged Unplug the charger</string>
+    <!-- add by wl -->
+    <string name="battery_preferences_summary">Use Battery Status Lock Screen to accelerate your recharge speed(Contains Ads)</string>
+    <string name="battery_speed" translatable="false">60%</string>
+    <string name="battery_storage" translatable="false">RAM\n%d%%</string>
+    <string name="lc_unlock_tips">Slide to unlock</string>
+
+    <string name="flashlight_error">Open failed,please open \"camera\" permission in system settings</string>
+
+    <string name="smartlock">Smart Screen Lock</string>
+</resources>

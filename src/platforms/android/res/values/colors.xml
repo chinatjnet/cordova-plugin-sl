@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="battery_bg_color">#66000000</color>
+    <color name="unlock_tips_text_color">#888888</color>
+    <color name="battery_percent_bg_color">#ccffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="settings_set_def_text_color">#ffffff</color>
+    <color name="settings_bg_color">#3c4049</color>
+    <color name="settings_header_bg_color">#444851</color>
+    <color name="settings_divider_color">#4a4e57</color>
+    <color name="settings_summary_color">#777a7f</color>
+    <color name="battery_charging_color_red">#ff6666</color>
+    <color name="weather_search_bg_color">#33ffffff</color>
+</resources>

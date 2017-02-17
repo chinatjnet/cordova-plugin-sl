@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 插件的Id，安装后注册的Id为此id加js-moudle的name属性,即cordova_plugins.js里的id属性 -->
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-sl" version="0.0.1">
+    <!-- 插件名称 -->
+    <name>ScreenlockPlugin</name>
+    <!-- 插件描述 -->
+    <description>Description</description>
+    <!-- js文件的地址，安装后路径为：plugins/插件Id/src属性值 -->
+    <js-module name="ScreenLock" src="www/sl.js">
+    <!-- 跟asserts/cordova_plugins.js中填clobbers的值一样 -->
+        <clobbers target="sl"/>
+    </js-module>
+    <!-- android -->
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+        <!-- config-file中包含的这段会原封不动的插入到config.xml文件中 -->
+            <feature name="Screenlock">
+                <param name="android-package" value="org.apache.cordova.screenlock.ScreenlockPlugin" />
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity android:name="com.atwal.wakeup.splash.PermissionsActivity" />
+
+            <service
+                android:name="com.atwal.wakeup.service.WakeupService"
+                android:enabled="true"
+                android:exported="true" />
+            <service
+                android:name="com.atwal.wakeup.service.WakeupService$WakeupInnerService"
+                android:enabled="true"
+                android:exported="true" />
+
+            <receiver
+                android:name="com.atwal.wakeup.receiver.WakeupReceiver"
+                android:enabled="true"
+                android:exported="true">
+                <intent-filter>
+                    <action android:name="android.intent.action.SCREEN_OFF" />
+                    <action android:name="android.intent.action.BOOT_COMPLETED" />
+                    <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                </intent-filter>
+            </receiver>
+
+            <activity
+                android:name="com.atwal.wakeup.battery.activity.BatteryActivity"
+                android:excludeFromRecents="true"
+                android:exported="false"
+                android:launchMode="singleInstance"
+                android:screenOrientation="portrait"
+                android:taskAffinity="com.abclauncher.battery.task"
+                android:theme="@style/BatteryLockScreenStyle" />
+
+            <service
+                android:name="com.atwal.wakeup.battery.service.BatteryService"
+                android:enabled="true"
+                android:exported="true">
+                <intent-filter>
+                    <action android:name="com.abclauncher.battery.Service" />
+                </intent-filter>
+            </service>
+
+            <receiver android:name="com.atwal.wakeup.battery.receiver.PhoneCallReceiver">
+                <intent-filter android:priority="2147483647">
+                    <action android:name="android.intent.action.PHONE_STATE" />
+                </intent-filter>
+            </receiver>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+            <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+            <uses-permission android:name="android.permission.CAMERA" />
+            <uses-permission android:name="android.permission.FLASHLIGHT" />
+            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+            <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+            <uses-feature android:name="android.hardware.camera" android:required="false" />
+            <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
+        </config-file>
+
+        <framework src="com.github.bumptech.glide:glide:3.7.0" />
+        <framework src="com.android.support:percent:25.0.1" />
+        <framework src="com.facebook.android:audience-network-sdk:4.+" />
+        <framework src="com.google.firebase:firebase-ads:10.0.1" />
+
+        <!--drawable-->
+        <source-file src="src/platforms/android/res/drawable/bg_ad_screen.9.png" target-dir="res/drawable" />
+        <source-file src="src/platforms/android/res/drawable/icon.png" target-dir="res/drawable" />
+        <source-file src="src/platforms/android/res/drawable/switch_bg_selector.xml" target-dir="res/drawable" />
+
+        <!--drawable-xhdpi-->
+        <source-file src="src/platforms/android/res/drawable-xhdpi/ic_more_vert_white_24dp.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/platforms/android/res/drawable-xhdpi/icon_ad_screen.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/platforms/android/res/drawable-xhdpi/icon_screen_ad_butten.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/platforms/android/res/drawable-xhdpi/icon_screen_battery.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/platforms/android/res/drawable-xhdpi/icon_screen_battery_full.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/platforms/android/res/drawable-xhdpi/icon_screen_charge.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/platforms/android/res/drawable-xhdpi/icon_screen_flashlight.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/platforms/android/res/drawable-xhdpi/icon_screen_flashlight_open.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/platforms/android/res/drawable-xhdpi/icon_screen_storage.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/platforms/android/res/drawable-xhdpi/lc_bg_sweep.png" target-dir="res/drawable-xhdpi" />
+
+        <!--drawable-xxhdpi-->
+        <source-file src="src/platforms/android/res/drawable-xxhdpi/lc_btn_unlocker.png" target-dir="res/drawable-xxhdpi" />
+        <source-file src="src/platforms/android/res/drawable-xxhdpi/switch_off.png" target-dir="res/drawable-xxhdpi" />
+        <source-file src="src/platforms/android/res/drawable-xxhdpi/switch_on.png" target-dir="res/drawable-xxhdpi" />
+        <source-file src="src/platforms/android/res/drawable-xxhdpi/theme_ic_arrow_back_white_24dp.png" target-dir="res/drawable-xxhdpi" />
+
+        <!--layout-->
+        <source-file src="src/platforms/android/res/layout/activity_battery_main.xml" target-dir="res/layout" />
+        <source-file src="src/platforms/android/res/layout/activity_permissions.xml" target-dir="res/layout" />
+        <source-file src="src/platforms/android/res/layout/battery_layout_preference.xml" target-dir="res/layout" />
+        <source-file src="src/platforms/android/res/layout/battery_settings_header_layout.xml" target-dir="res/layout" />
+        <source-file src="src/platforms/android/res/layout/include_battery_ad.xml" target-dir="res/layout" />
+        <source-file src="src/platforms/android/res/layout/include_battery_charging_state.xml" target-dir="res/layout" />
+        <source-file src="src/platforms/android/res/layout/include_settings_listview.xml" target-dir="res/layout" />
+        <source-file src="src/platforms/android/res/layout/preference_widget_fixed_switch.xml" target-dir="res/layout" />
+
+        <!--values-->
+        <source-file src="src/platforms/android/res/values/attrs.xml" target-dir="res/values" />
+        <source-file src="src/platforms/android/res/values/colors.xml" target-dir="res/values" />
+        <source-file src="src/platforms/android/res/values/dimens.xml" target-dir="res/values" />
+        <source-file src="src/platforms/android/res/values/styles.xml" target-dir="res/values" />
+        <source-file src="src/platforms/android/res/values-w820dp/dimens.xml" target-dir="res/values-w820dp" />
+
+        <config-file target="res/values/strings.xml" parent="/resources">
+            <string name="help">Help</string>
+            <string name="string_help_text">help content</string>
+            <string name="quit">quit</string>
+            <string name="settings">settings</string>
+            <string name="battery_full_time_start_text">Fully charge left</string>
+            <plurals name="battery_full_time_hour">
+                <item quantity="one">%1$d hour</item>
+                <item quantity="other">%1$d hours</item>
+            </plurals>
+            <plurals name="battery_full_time_minute">
+                <item quantity="one">%1$d minute</item>
+                <item quantity="other">%1$d minutes</item>
+            </plurals>
+            <string name="battery_is_full">Fully charged Unplug the charger</string>
+            <!-- add by wl -->
+            <string name="battery_preferences_summary">Use Battery Status Lock Screen to accelerate your recharge speed(Contains Ads)</string>
+            <string name="battery_speed" translatable="false">60%</string>
+            <string name="battery_storage" translatable="false">RAM\n%d%%</string>
+            <string name="lc_unlock_tips">Slide to unlock</string>
+
+            <string name="flashlight_error">Open failed,please open \"camera\" permission in system settings</string>
+
+            <string name="smartlock">Smart Screen Lock</string>
+        </config-file>
+
+        <!--values-de-->
+        <source-file src="src/platforms/android/res/values-de/strings.xml" target-dir="res/values-de" />
+
+        <!--values-fr-->
+        <source-file src="src/platforms/android/res/values-fr/strings.xml" target-dir="res/values-fr" />
+
+        <!--values-jp-->
+        <source-file src="src/platforms/android/res/values-jp/strings.xml" target-dir="res/values-jp" />
+
+        <!--values-ko-->
+        <source-file src="src/platforms/android/res/values-ko/strings.xml" target-dir="res/values-ko" />
+
+        <!--values-zh-rCN-->
+        <source-file src="src/platforms/android/res/values-zh-rCN/strings.xml" target-dir="res/values-zh-rCN" />
+
+        <!--values-zh-rTW-->
+        <source-file src="src/platforms/android/res/values-zh-rTW/strings.xml" target-dir="res/values-zh-rTW" />
+
+        <!--xml-->
+        <source-file src="src/platforms/android/res/xml/battery_setting_preferences.xml" target-dir="res/xml" />
+
+        <!--screen lock-->
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/activity/BatteryActivity.java" target-dir="src/com/atwal/wakeup/battery/activity"/>
+
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/bean/FacebookNativeAdBean.java" target-dir="src/com/atwal/wakeup/battery/bean"/>
+
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/fragment/BatterySettingFragment.java" target-dir="src/com/atwal/wakeup/battery/fragment"/>
+
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/receiver/LockerReceiver.java" target-dir="src/com/atwal/wakeup/battery/receiver"/>
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/receiver/LockerReceiverCallback.java" target-dir="src/com/atwal/wakeup/battery/receiver"/>
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/receiver/PhoneCallReceiver.java" target-dir="src/com/atwal/wakeup/battery/receiver"/>
+
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/service/BatteryBroadcastReceiver.java" target-dir="src/com/atwal/wakeup/battery/service"/>
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/service/BatteryService.java" target-dir="src/com/atwal/wakeup/battery/service"/>
+
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/util/AdUtil.java" target-dir="src/com/atwal/wakeup/battery/util"/>
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/util/BatteryUtils.java" target-dir="src/com/atwal/wakeup/battery/util"/>
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/util/FacebookAdCallback.java" target-dir="src/com/atwal/wakeup/battery/util"/>
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/util/FacebookAdCallbackDtail.java" target-dir="src/com/atwal/wakeup/battery/util"/>
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/util/SettingsHelper.java" target-dir="src/com/atwal/wakeup/battery/util"/>
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/util/Utilities.java" target-dir="src/com/atwal/wakeup/battery/util"/>
+
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/view/CircularProgress.java" target-dir="src/com/atwal/wakeup/battery/view"/>
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/view/DragAdViewLayout.java" target-dir="src/com/atwal/wakeup/battery/view"/>
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/view/FixedSwitchPreference.java" target-dir="src/com/atwal/wakeup/battery/view"/>
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/view/FlashTextView.java" target-dir="src/com/atwal/wakeup/battery/view"/>
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/view/LauncherSwitch.java" target-dir="src/com/atwal/wakeup/battery/view"/>
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/view/MyScrollview.java" target-dir="src/com/atwal/wakeup/battery/view"/>
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/view/SwipeBackActivity.java" target-dir="src/com/atwal/wakeup/battery/view"/>
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/battery/view/SwipeBackLayout.java" target-dir="src/com/atwal/wakeup/battery/view"/>
+
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/receiver/WakeupReceiver.java" target-dir="src/com/atwal/wakeup/receiver"/>
+
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/service/WakeupService.java" target-dir="src/com/atwal/wakeup/service"/>
+
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/splash/PermissionsActivity.java" target-dir="src/com/atwal/wakeup/splash"/>
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/splash/PermissionsChecker.java" target-dir="src/com/atwal/wakeup/splash"/>
+        <source-file src="src/platforms/android/src/com/atwal/wakeup/splash/Utils.java" target-dir="src/com/atwal/wakeup/splash"/>
+
+        <!-- 本地代码，有多个文件就写多个source-file，src对应本项目，target对应安装后的目录 -->
+        <source-file src="src/platforms/android/src/org/apache/cordova/screenlock/ScreenlockPlugin.java" target-dir="src/org/apache/cordova/screenlock"/>
+    </platform>
+    <!-- 其他平台的代码 -->
+</plugin>

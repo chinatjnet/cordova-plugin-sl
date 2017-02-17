@@ -1,0 +1,23 @@
+<resources>
+    <string name="help">Aidez-moi</string>
+    <string name="string_help_text">Contenu d\'aide</string>
+    <string name="quit">quitter</string>
+    <string name="settings">paramètres</string>
+    <string name="battery_full_time_start_text">Charge complètement à gauche</string>
+    <plurals name="battery_full_time_hour">
+        <item quantity="one">%1$d heure</item>
+        <item quantity="other">%1$d heures</item>
+    </plurals>
+    <plurals name="battery_full_time_minute">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="other">%1$d minutes</item>
+    </plurals>
+    <string name="battery_is_full">Entièrement chargé Débranchez le chargeur</string>
+    <!-- add by wl -->
+    <string name="battery_preferences_summary">Utilisez l\'écran de verrouillage de l\'état de la batterie pour accélérer votre vitesse de recharge</string>
+    <string name="lc_unlock_tips">Glisser pour déverouiller</string>
+
+    <string name="flashlight_error">Échec de l\'ouverture, ouvrez l\'autorisation \"caméra\" dans les paramètres système</string>
+    <string name="smartlock">Écran de verrouillage intelligent</string>
+
+</resources>

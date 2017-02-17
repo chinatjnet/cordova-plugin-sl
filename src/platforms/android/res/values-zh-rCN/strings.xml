@@ -1,0 +1,21 @@
+<resources>
+    <string name="help">帮 助</string>
+    <string name="string_help_text">帮助内容</string>
+    <string name="quit">退 出</string>
+    <string name="settings">设 置</string>
+    <string name="battery_full_time_start_text">充电完成剩余</string>
+    <plurals name="battery_full_time_hour">
+        <item quantity="one">%1$d 小时</item>
+        <item quantity="other">%1$d 小时</item>
+    </plurals>
+    <plurals name="battery_full_time_minute">
+        <item quantity="one">%1$d 分钟</item>
+        <item quantity="other">%1$d 分钟</item>
+    </plurals>
+    <string name="battery_is_full">充电完成拔下充电器</string>
+    <!-- add by wl -->
+    <string name="battery_preferences_summary">开启电量锁屏加速你的充电速度</string>
+    <string name="lc_unlock_tips">滑动解锁</string>
+    <string name="flashlight_error">开启失败，请在系统设置中开启相机权限</string>
+    <string name="smartlock">智能锁屏</string>
+</resources>
