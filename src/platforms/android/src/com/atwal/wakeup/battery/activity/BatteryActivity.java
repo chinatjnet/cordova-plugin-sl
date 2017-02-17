@@ -46,7 +46,6 @@ import com.atwal.wakeup.battery.view.SwipeBackLayout;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.facebook.ads.NativeAd;
-import com.hw.slpd.BuildConfig;
 import com.thehotgame.bottleflip.R;
 
 import com.google.android.gms.ads.AdListener;
