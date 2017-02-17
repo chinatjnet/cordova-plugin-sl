@@ -264,7 +264,6 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
                     showAdsAnim();
                 } catch (Exception e) {
                     if (bFbAdFirst) {
-                        initAdmob();
                     }
                 }
             }
@@ -273,7 +272,6 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
             public void onNativeAdLoadError(AdError adError) {
                 Log.d("screenLock", "fb ad error:" + adError.getErrorMessage());
                 if (bFbAdFirst) {
-                    initAdmob();
                 }
             }
 
