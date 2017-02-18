@@ -1,13 +1,10 @@
 package com.atwal.wakeup.battery.activity;
 
-import android.Manifest;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.hardware.Camera;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.text.Spannable;
@@ -80,9 +77,7 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
     private TextView mBatteryAppName;
     private static final String SHOW_ADS_KEY = "SHOW_ADS_KEY";
     private static long ONE_DAY = 1000 * 60 * 60 * 24;
-    private static boolean isFlashLightOn = false;
     private TextView mToolbar;
-    public static Camera cam = null;
     private static int PERMISSION_REQUEST_CODE = 1001;
     private static boolean bShowAdmob = false;
     private static boolean bFbAdFirst = false;
@@ -395,18 +390,6 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (isFlashLightOn) {
-            if (cam != null) {
-                try {
-                    cam.stopPreview();
-                    cam.release();
-                } catch (Exception e) {
-                    Log.e("onDestroy", "error:" + e.getMessage());
-                }
-            }
-            isFlashLightOn = false;
-            mBatteryPgFlashlightTv.setBackgroundResource(R.drawable.icon_screen_flashlight);
-        }
         mLockerReceiver.unregisterLockerReceiver(this);
         if (nativeAd != null) {
             nativeAd.destroy();
