@@ -58,6 +58,8 @@ import android.net.Uri;
 import android.widget.Toast;
 
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -170,39 +172,6 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
         mBatteryPgFlashlightTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
-                    try {
-                        if (isFlashLightOn) {
-                            if (cam != null) {
-                                cam.stopPreview();
-                                cam.release();
-                            }
-                            isFlashLightOn = false;
-                            mBatteryPgFlashlightTv.setBackgroundResource(R.drawable.icon_screen_flashlight);
-                        } else {
-                            cam = Camera.open();
-                            Camera.Parameters p = cam.getParameters();
-                            p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-                            cam.setParameters(p);
-                            cam.startPreview();
-                            isFlashLightOn = true;
-                            mBatteryPgFlashlightTv.setBackgroundResource(R.drawable.icon_screen_flashlight_open);
-                        }
-                    } catch (Exception e) {
-                        if (Build.VERSION.SDK_INT >= 23) {
-                            PermissionsChecker mPermissionsChecker = new PermissionsChecker(BatteryActivity.this);
-                            String[] PERMISSIONS = new String[]{
-                                    Manifest.permission.CAMERA,
-                                    Manifest.permission.READ_PHONE_STATE
-                            };
-                            if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
-                                PermissionsActivity.startActivityForResult(BatteryActivity.this, PERMISSION_REQUEST_CODE, PERMISSIONS);
-                                return;
-                            }
-                        }
-                        Toast.makeText(getApplicationContext(), R.string.flashlight_error, Toast.LENGTH_LONG).show();
-                    }
-                }
                 //TrackerUtil.pointEvent(getApplicationContext(), "screenlock", "click", "flashlight");
             }
         });
@@ -228,6 +197,19 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
                 BatterySettingFragment.add(getFragmentManager(), R.id.battery_charging_content);
             }
         });
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Log.i("screenLock", "run task");
+                BatteryActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mBatteryPgFlashlightTv.setText(String.format(getString(R.string.battery_cpu), Utils.getProcessCpuRate()));
+                    }
+                });
+            }
+        }, 0, 2 * 1000);
     }
 
     private void initAd() {
@@ -531,6 +513,7 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
     public void receiveTime(String time) {
         mTimeTv.setText(time);
         mBatteryPgStorageTv.setText(String.format(getString(R.string.battery_storage), Utilities.getStorageUsePercent()));
+        mBatteryPgFlashlightTv.setText(String.format(getString(R.string.battery_cpu), Utils.getProcessCpuRate()));
     }
 
     @Override

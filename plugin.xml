@@ -75,13 +75,7 @@
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
             <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
             <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-            <uses-permission android:name="android.permission.CAMERA" />
-            <uses-permission android:name="android.permission.FLASHLIGHT" />
             <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-            <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
-            <uses-feature android:name="android.hardware.camera" android:required="false" />
-            <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
         </config-file>
 
         <framework src="com.github.bumptech.glide:glide:3.7.0" />
@@ -153,6 +147,7 @@
             <string name="flashlight_error">Open failed,please open \"camera\" permission in system settings</string>
 
             <string name="smartlock">Smart Screen Lock</string>
+            <string name="battery_cpu" translatable="false">CPU\n%d%%</string>
         </config-file>
 
         <!--values-de-->

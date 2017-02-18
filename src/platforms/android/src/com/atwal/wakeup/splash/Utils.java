@@ -10,6 +10,7 @@ import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -200,5 +201,39 @@ public class Utils {
     public static boolean isFbAdFirst(Context context) {
         String sort = getStrValue(context, KEY_SHOW_SCREEN_ADSORT);
         return TextUtils.isEmpty(sort) || sort.equals("fb");
+    }
+
+    public static int getProcessCpuRate() {
+        try {
+            RandomAccessFile reader = new RandomAccessFile("/proc/stat", "r");
+            String load = reader.readLine();
+
+            String[] toks = load.split(" +");  // Split on one or more spaces
+
+            long idle1 = Long.parseLong(toks[4]);
+            long cpu1 = Long.parseLong(toks[2]) + Long.parseLong(toks[3]) + Long.parseLong(toks[5])
+                    + Long.parseLong(toks[6]) + Long.parseLong(toks[7]) + Long.parseLong(toks[8]);
+
+            try {
+                Thread.sleep(360);
+            } catch (Exception e) {}
+
+            reader.seek(0);
+            load = reader.readLine();
+            reader.close();
+
+            toks = load.split(" +");
+
+            long idle2 = Long.parseLong(toks[4]);
+            long cpu2 = Long.parseLong(toks[2]) + Long.parseLong(toks[3]) + Long.parseLong(toks[5])
+                    + Long.parseLong(toks[6]) + Long.parseLong(toks[7]) + Long.parseLong(toks[8]);
+
+            return (int) ((cpu2 - cpu1) * 100 / ((cpu2 + idle2) - (cpu1 + idle1)));
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return 0;
     }
 }
