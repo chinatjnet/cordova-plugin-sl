@@ -28,5 +28,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignRight="@id/battery_progress_speed"
         android:layout_marginRight="24dp"
-        android:background="@drawable/icon_screen_flashlight" />
+        android:background="@drawable/icon_screen_storage"
+        android:text="@string/battery_cpu" />
 </RelativeLayout>
