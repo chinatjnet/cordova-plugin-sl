@@ -172,7 +172,7 @@ public class BatteryUtils {
         } catch (Exception e) {
 
         }
-        return BoxBlurFilter(bitmap, 25);
+        return bitmap;
     }
 
     public static Bitmap BoxBlurFilter(Bitmap bmp, int radius) {
