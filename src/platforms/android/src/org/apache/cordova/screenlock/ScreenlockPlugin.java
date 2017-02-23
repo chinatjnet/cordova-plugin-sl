@@ -117,7 +117,11 @@ public class ScreenlockPlugin extends CordovaPlugin {
                 try {
                     ((ViewGroup) (((View) webView.getClass().getMethod("getView").invoke(webView)).getParent())).addView(adViewLayout, params);
                 } catch (Exception e) {
-                    ((ViewGroup) webView).addView(adViewLayout, params);
+                    try {
+                        ((FrameLayout) webView.getView().getParent()).addView(adViewLayout, params);
+                    } catch (Exception e1) {
+                        ((ViewGroup) webView).addView(adViewLayout, params);
+                    }
                 }
             }
 
@@ -128,5 +132,14 @@ public class ScreenlockPlugin extends CordovaPlugin {
             return true;
         }
         return super.execute(action, args, callbackContext);
+    }
+
+    private View getWebView() {
+        CordovaWebView webView = this.webView;
+        try {
+            return (View) webView.getClass().getMethod("getView").invoke(webView);
+        } catch (Exception e) {
+            return (View) webView;
+        }
     }
 }
