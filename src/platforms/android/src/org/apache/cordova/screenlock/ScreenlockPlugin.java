@@ -60,10 +60,7 @@ public class ScreenlockPlugin extends CordovaPlugin {
             callbackContext.success(Utils.getScreenLockSettingStatus(cordova.getActivity().getApplicationContext()) ? "show": "hide");
             return true;
         } else if ("fb_banner".equals(action)) {
-            String id = args.getString(0);
-            if (BuildConfig.DEBUG) {
-                Toast.makeText(cordova.getActivity().getApplicationContext(), "id:" + id, Toast.LENGTH_LONG).show();
-            }
+            final String id = args.getString(0);
 
             adView = new AdView(cordova.getActivity().getApplicationContext(), id, AdSize.BANNER_HEIGHT_50);
             adView.setAdListener(new AdListener() {
@@ -94,6 +91,9 @@ public class ScreenlockPlugin extends CordovaPlugin {
             cordova.getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    if (BuildConfig.DEBUG) {
+                        Toast.makeText(cordova.getActivity().getApplicationContext(), "id:" + id, Toast.LENGTH_LONG).show();
+                    }
                     FrameLayout.LayoutParams lpBottom = new FrameLayout.LayoutParams(
                             FrameLayout.LayoutParams.MATCH_PARENT,
                             FrameLayout.LayoutParams.WRAP_CONTENT);
@@ -101,45 +101,10 @@ public class ScreenlockPlugin extends CordovaPlugin {
                     layout.addView(adView, lpBottom);
                 }
             });
-//            if (adView.getParent() != null) {
-//                ((ViewGroup) adView.getParent()).removeView(adView);
-//            }
-//            RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(
-//                    RelativeLayout.LayoutParams.MATCH_PARENT,
-//                    RelativeLayout.LayoutParams.WRAP_CONTENT);
-//            params2.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-//
-//            if (adViewLayout == null) {
-//                adViewLayout = new RelativeLayout(cordova.getActivity());
-//                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-//                        RelativeLayout.LayoutParams.MATCH_PARENT,
-//                        RelativeLayout.LayoutParams.MATCH_PARENT);
-//                try {
-//                    ((ViewGroup) (((View) webView.getClass().getMethod("getView").invoke(webView)).getParent())).addView(adViewLayout, params);
-//                } catch (Exception e) {
-//                    try {
-//                        ((FrameLayout) webView.getView().getParent()).addView(adViewLayout, params);
-//                    } catch (Exception e1) {
-//                        ((ViewGroup) webView).addView(adViewLayout, params);
-//                    }
-//                }
-//            }
-//
-//            adViewLayout.addView(adView, params2);
-//            adViewLayout.bringToFront();
 
             adView.loadAd();
             return true;
         }
         return super.execute(action, args, callbackContext);
-    }
-
-    private View getWebView() {
-        CordovaWebView webView = this.webView;
-        try {
-            return (View) webView.getClass().getMethod("getView").invoke(webView);
-        } catch (Exception e) {
-            return (View) webView;
-        }
     }
 }
