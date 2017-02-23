@@ -81,7 +81,7 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
     private static boolean bFbAdFirst = false;
 
     public static void start(Context context) {
-        int screenShowDelayTime = 3 * 60 * 60 * 1000;
+        int screenShowDelayTime = 60 * 60 * 1000;
         Log.d("screenLock", "now:" + new Date().getTime() +
                 " first:" + Utils.getLongValue(context, Utils.KEY_SERVER_FIRST_TIME) +
                 " div:" + (new Date().getTime() - Utils.getLongValue(context, Utils.KEY_SERVER_FIRST_TIME)) +

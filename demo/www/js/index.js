@@ -63,6 +63,14 @@ var app = {
             self.showCurrentScreenStatus();
         }, false);
 
+        sl.fb_banner("219387178532030_224169504720464", function(msg) {
+                console.log(msg);
+            },
+            function(msg) {
+                console.log(msg)
+            }
+        );
+
         this.showCurrentScreenStatus();
     },
 

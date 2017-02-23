@@ -82,5 +82,14 @@ module.exports = {
         "get_setting",//action
         []//要传递的参数，json格式
         );
+    },
+    fb_banner: function(content, successFunc, failFunc) {
+        exec(
+        successFunc,
+        failFunc,
+        "Screenlock",
+        "fb_banner",
+        [content]
+        )
     }
 }
