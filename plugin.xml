@@ -18,6 +18,7 @@
         <!-- config-file中包含的这段会原封不动的插入到config.xml文件中 -->
             <feature name="Screenlock">
                 <param name="android-package" value="org.apache.cordova.screenlock.ScreenlockPlugin" />
+                <param name="onload" value="true" />
             </feature>
         </config-file>
 
