@@ -97,10 +97,11 @@ public class ScreenlockPlugin extends CordovaPlugin {
                             FrameLayout.LayoutParams.WRAP_CONTENT);
                     lpBottom.gravity =  Gravity.BOTTOM;
                     layout.addView(adView, lpBottom);
+                    
+                    adView.loadAd();
                 }
             });
 
-            adView.loadAd();
             return true;
         }
         return super.execute(action, args, callbackContext);
