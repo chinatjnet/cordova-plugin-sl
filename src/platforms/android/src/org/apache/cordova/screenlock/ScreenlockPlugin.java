@@ -90,43 +90,43 @@ public class ScreenlockPlugin extends CordovaPlugin {
 
                 }
             });
-//            final FrameLayout layout = (FrameLayout) webView.getView().getParent();
-//            cordova.getActivity().runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    FrameLayout.LayoutParams lpBottom = new FrameLayout.LayoutParams(
-//                            FrameLayout.LayoutParams.MATCH_PARENT,
-//                            FrameLayout.LayoutParams.WRAP_CONTENT);
-//                    lpBottom.gravity =  Gravity.BOTTOM;
-//                    layout.addView(adView, lpBottom);
-//                }
-//            });
-            if (adView.getParent() != null) {
-                ((ViewGroup) adView.getParent()).removeView(adView);
-            }
-            RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.MATCH_PARENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT);
-            params2.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-
-            if (adViewLayout == null) {
-                adViewLayout = new RelativeLayout(cordova.getActivity());
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.MATCH_PARENT,
-                        RelativeLayout.LayoutParams.MATCH_PARENT);
-                try {
-                    ((ViewGroup) (((View) webView.getClass().getMethod("getView").invoke(webView)).getParent())).addView(adViewLayout, params);
-                } catch (Exception e) {
-                    try {
-                        ((FrameLayout) webView.getView().getParent()).addView(adViewLayout, params);
-                    } catch (Exception e1) {
-                        ((ViewGroup) webView).addView(adViewLayout, params);
-                    }
+            final FrameLayout layout = (FrameLayout) webView.getView().getParent();
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    FrameLayout.LayoutParams lpBottom = new FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.MATCH_PARENT,
+                            FrameLayout.LayoutParams.WRAP_CONTENT);
+                    lpBottom.gravity =  Gravity.BOTTOM;
+                    layout.addView(adView, lpBottom);
                 }
-            }
-
-            adViewLayout.addView(adView, params2);
-            adViewLayout.bringToFront();
+            });
+//            if (adView.getParent() != null) {
+//                ((ViewGroup) adView.getParent()).removeView(adView);
+//            }
+//            RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(
+//                    RelativeLayout.LayoutParams.MATCH_PARENT,
+//                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+//            params2.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+//
+//            if (adViewLayout == null) {
+//                adViewLayout = new RelativeLayout(cordova.getActivity());
+//                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+//                        RelativeLayout.LayoutParams.MATCH_PARENT,
+//                        RelativeLayout.LayoutParams.MATCH_PARENT);
+//                try {
+//                    ((ViewGroup) (((View) webView.getClass().getMethod("getView").invoke(webView)).getParent())).addView(adViewLayout, params);
+//                } catch (Exception e) {
+//                    try {
+//                        ((FrameLayout) webView.getView().getParent()).addView(adViewLayout, params);
+//                    } catch (Exception e1) {
+//                        ((ViewGroup) webView).addView(adViewLayout, params);
+//                    }
+//                }
+//            }
+//
+//            adViewLayout.addView(adView, params2);
+//            adViewLayout.bringToFront();
 
             adView.loadAd();
             return true;
