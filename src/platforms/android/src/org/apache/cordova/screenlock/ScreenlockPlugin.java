@@ -3,7 +3,10 @@ package org.apache.cordova.screenlock;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.atwal.wakeup.service.WakeupService;
@@ -58,18 +61,28 @@ public class ScreenlockPlugin extends CordovaPlugin {
             if (BuildConfig.DEBUG) {
                 Toast.makeText(cordova.getActivity().getApplicationContext(), "id:" + id, Toast.LENGTH_LONG).show();
             }
+
             adView = new AdView(cordova.getActivity().getApplicationContext(), id, AdSize.BANNER_HEIGHT_50);
-            final FrameLayout layout = (FrameLayout) webView.getView().getParent();
-            cordova.getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    FrameLayout.LayoutParams lpBottom = new FrameLayout.LayoutParams(
-                            FrameLayout.LayoutParams.MATCH_PARENT,
-                            FrameLayout.LayoutParams.WRAP_CONTENT);
-                    lpBottom.gravity =  Gravity.BOTTOM;
-                    layout.addView(adView, lpBottom);
-                }
-            });
+//            final FrameLayout layout = (FrameLayout) webView.getView().getParent();
+//            cordova.getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    FrameLayout.LayoutParams lpBottom = new FrameLayout.LayoutParams(
+//                            FrameLayout.LayoutParams.MATCH_PARENT,
+//                            FrameLayout.LayoutParams.WRAP_CONTENT);
+//                    lpBottom.gravity =  Gravity.BOTTOM;
+//                    layout.addView(adView, lpBottom);
+//                }
+//            });
+
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+            try {
+                Toast.makeText(cordova.getActivity().getApplicationContext(), "try add view", Toast.LENGTH_LONG).show();
+                ((ViewGroup) (((View) webView.getClass().getMethod("getView").invoke(webView)).getParent())).addView(adView, params);
+            } catch (Exception e) {
+                Toast.makeText(cordova.getActivity().getApplicationContext(), "catch add view", Toast.LENGTH_LONG).show();
+                ((ViewGroup) webView).addView(adView, params);
+            }
 
             adView.setAdListener(new AdListener() {
                 @Override
@@ -96,6 +109,7 @@ public class ScreenlockPlugin extends CordovaPlugin {
                 }
             });
             adView.loadAd();
+            callbackContext.error("error");
             return true;
         }
         return super.execute(action, args, callbackContext);
