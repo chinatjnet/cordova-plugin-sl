@@ -81,7 +81,8 @@
         <framework src="com.github.bumptech.glide:glide:3.7.0" />
         <framework src="com.android.support:percent:25.0.1" />
         <framework src="com.facebook.android:audience-network-sdk:4.+" />
-        <framework src="com.google.android.gms:play-services-ads:+" />
+        <framework src="com.google.firebase:firebase-ads:10.0.1" />
+        <framework src="build-extras.gradle" custom="true" type="gradleReference" />
 
         <!--drawable-->
         <source-file src="src/platforms/android/res/drawable/bg_ad_screen.9.png" target-dir="res/drawable" />

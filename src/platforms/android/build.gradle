@@ -319,3 +319,5 @@ for (def func : cdvPluginPostBuildExtras) {
 if (hasProperty('postBuildExtras')) {
     postBuildExtras()
 }
+
+configurations { all*.exclude group: 'com.google.android.gms', module: 'com.facebook.android' }
