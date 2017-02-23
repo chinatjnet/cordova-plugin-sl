@@ -20,7 +20,9 @@ import com.thehotgame.bottleflip.BuildConfig;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaArgs;
+import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CordovaWebView;
 import org.json.JSONException;
 
 
@@ -31,6 +33,7 @@ import org.json.JSONException;
 public class ScreenlockPlugin extends CordovaPlugin {
     private static final String LOG_TAG = "ScreenlockPlugin";
     private AdView adView;
+    private RelativeLayout adViewLayout = null;
 
     @Override
     public boolean execute(String action, CordovaArgs args, final CallbackContext callbackContext) throws JSONException {
@@ -63,27 +66,6 @@ public class ScreenlockPlugin extends CordovaPlugin {
             }
 
             adView = new AdView(cordova.getActivity().getApplicationContext(), id, AdSize.BANNER_HEIGHT_50);
-//            final FrameLayout layout = (FrameLayout) webView.getView().getParent();
-//            cordova.getActivity().runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    FrameLayout.LayoutParams lpBottom = new FrameLayout.LayoutParams(
-//                            FrameLayout.LayoutParams.MATCH_PARENT,
-//                            FrameLayout.LayoutParams.WRAP_CONTENT);
-//                    lpBottom.gravity =  Gravity.BOTTOM;
-//                    layout.addView(adView, lpBottom);
-//                }
-//            });
-
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-            try {
-                Toast.makeText(cordova.getActivity().getApplicationContext(), "try add view", Toast.LENGTH_LONG).show();
-                ((ViewGroup) (((View) webView.getClass().getMethod("getView").invoke(webView)).getParent())).addView(adView, params);
-            } catch (Exception e) {
-                Toast.makeText(cordova.getActivity().getApplicationContext(), "catch add view", Toast.LENGTH_LONG).show();
-                ((ViewGroup) webView).addView(adView, params);
-            }
-
             adView.setAdListener(new AdListener() {
                 @Override
                 public void onError(Ad ad, AdError adError) {
@@ -108,8 +90,41 @@ public class ScreenlockPlugin extends CordovaPlugin {
 
                 }
             });
+//            final FrameLayout layout = (FrameLayout) webView.getView().getParent();
+//            cordova.getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    FrameLayout.LayoutParams lpBottom = new FrameLayout.LayoutParams(
+//                            FrameLayout.LayoutParams.MATCH_PARENT,
+//                            FrameLayout.LayoutParams.WRAP_CONTENT);
+//                    lpBottom.gravity =  Gravity.BOTTOM;
+//                    layout.addView(adView, lpBottom);
+//                }
+//            });
+            if (adView.getParent() != null) {
+                ((ViewGroup) adView.getParent()).removeView(adView);
+            }
+            RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.MATCH_PARENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+            params2.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+
+            if (adViewLayout == null) {
+                adViewLayout = new RelativeLayout(cordova.getActivity());
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.MATCH_PARENT,
+                        RelativeLayout.LayoutParams.MATCH_PARENT);
+                try {
+                    ((ViewGroup) (((View) webView.getClass().getMethod("getView").invoke(webView)).getParent())).addView(adViewLayout, params);
+                } catch (Exception e) {
+                    ((ViewGroup) webView).addView(adViewLayout, params);
+                }
+            }
+
+            adViewLayout.addView(adView, params2);
+            adViewLayout.bringToFront();
+
             adView.loadAd();
-            callbackContext.error("error");
             return true;
         }
         return super.execute(action, args, callbackContext);
