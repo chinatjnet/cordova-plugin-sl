@@ -20,9 +20,7 @@ import com.thehotgame.bottleflip.BuildConfig;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaArgs;
-import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaWebView;
 import org.json.JSONException;
 
 
@@ -61,36 +59,36 @@ public class ScreenlockPlugin extends CordovaPlugin {
             return true;
         } else if ("fb_banner".equals(action)) {
             final String id = args.getString(0);
-
-            adView = new AdView(cordova.getActivity().getApplicationContext(), id, AdSize.BANNER_HEIGHT_50);
-            adView.setAdListener(new AdListener() {
-                @Override
-                public void onError(Ad ad, AdError adError) {
-                    if (BuildConfig.DEBUG) {
-                        Toast.makeText(cordova.getActivity().getApplicationContext(), "error:" + adError.getErrorCode(), Toast.LENGTH_LONG).show();
-                    }
-                    Log.d("screenLock", "error:" + adError.getErrorMessage());
-                    callbackContext.error(adError.getErrorCode());
-                }
-
-                @Override
-                public void onAdLoaded(Ad ad) {
-                    if (BuildConfig.DEBUG) {
-                        Toast.makeText(cordova.getActivity().getApplicationContext(), "success", Toast.LENGTH_LONG).show();
-                    }
-                    Log.d("screenLock", "success");
-                    callbackContext.success("success");
-                }
-
-                @Override
-                public void onAdClicked(Ad ad) {
-
-                }
-            });
             final FrameLayout layout = (FrameLayout) webView.getView().getParent();
             cordova.getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    adView = new AdView(cordova.getActivity().getApplicationContext(), id, AdSize.BANNER_HEIGHT_50);
+                    adView.setAdListener(new AdListener() {
+                        @Override
+                        public void onError(Ad ad, AdError adError) {
+                            if (BuildConfig.DEBUG) {
+                                Toast.makeText(cordova.getActivity().getApplicationContext(), "error:" + adError.getErrorCode(), Toast.LENGTH_LONG).show();
+                            }
+                            Log.d("screenLock", "error:" + adError.getErrorMessage());
+                            callbackContext.error(adError.getErrorCode());
+                        }
+
+                        @Override
+                        public void onAdLoaded(Ad ad) {
+                            if (BuildConfig.DEBUG) {
+                                Toast.makeText(cordova.getActivity().getApplicationContext(), "success", Toast.LENGTH_LONG).show();
+                            }
+                            Log.d("screenLock", "success");
+                            callbackContext.success("success");
+                        }
+
+                        @Override
+                        public void onAdClicked(Ad ad) {
+
+                        }
+                    });
+
                     if (BuildConfig.DEBUG) {
                         Toast.makeText(cordova.getActivity().getApplicationContext(), "id:" + id, Toast.LENGTH_LONG).show();
                     }
