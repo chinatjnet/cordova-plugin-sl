@@ -48,8 +48,6 @@ import android.net.Uri;
 import android.widget.Toast;
 
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 /**
@@ -186,18 +184,7 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
             }
         });
 
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Log.i("screenLock", "run task");
-                BatteryActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mBatteryPgFlashlightTv.setText(String.format(getString(R.string.battery_cpu), Utils.getProcessCpuRate()));
-                    }
-                });
-            }
-        }, 0, 2 * 1000);
+        mBatteryPgFlashlightTv.setText(String.format(getString(R.string.battery_cpu), Utils.getProcessCpuRate()));
     }
 
     private void initAd() {
