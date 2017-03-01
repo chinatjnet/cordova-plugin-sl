@@ -48,7 +48,7 @@ import android.net.Uri;
 import android.widget.Toast;
 
 import java.util.Date;
-
+import com.facebook.appevents.AppEventsLogger;
 
 /**
  * Created by sks on 2016/9/26.
@@ -116,6 +116,9 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
 
     @Override
     public void initViews() {
+        AppEventsLogger.activateApp(getApplication());
+        AppEventsLogger logger = AppEventsLogger.newLogger(this);
+        logger.logEvent("SHOW_SCREEN_LOCK");
         initWindow();
         getSwipeBackLayout().setEnablePullToBack(true);
         setDragEdge(SwipeBackLayout.DragEdge.LEFT);
