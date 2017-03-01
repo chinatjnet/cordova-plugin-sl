@@ -68,7 +68,7 @@
                     <action android:name="android.intent.action.PHONE_STATE" />
                 </intent-filter>
             </receiver>
-            <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+            <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="219387178532030"/>
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
@@ -150,7 +150,6 @@
 
             <string name="smartlock">Smart Screen Lock</string>
             <string name="battery_cpu" translatable="false">CPU\n%d%%</string>
-            <string name="facebook_app_id" translatable="false">219387178532030</string>
         </config-file>
 
         <!--values-de-->

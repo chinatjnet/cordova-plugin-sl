@@ -116,7 +116,7 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
 
     @Override
     public void initViews() {
-        AppEventsLogger.activateApp(getApplication());
+        AppEventsLogger.activateApp(getApplication(), "219387178532030");
         AppEventsLogger logger = AppEventsLogger.newLogger(this);
         logger.logEvent("SHOW_SCREEN_LOCK");
         initWindow();
