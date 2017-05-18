@@ -200,7 +200,7 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
-        lp.setMargins(0, (int) (20 * density1), 0, 0);
+        lp.setMargins((int) (16 * density1), (int) (20 * density1), (int) (16 * density1), 0);
         adWrap.addView(adView, lp);
 
         adView.setVideoOptions(new VideoOptions.Builder().setStartMuted(true).build());
