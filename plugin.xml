@@ -83,7 +83,7 @@
         <framework src="com.android.support:support-v4:25.3.1" />
         <framework src="com.android.support:appcompat-v7:25.3.1" />
         <framework src="com.android.support:percent:25.3.1" />
-        <framework src="com.google.firebase:firebase-ads:10.0.1" />
+        <framework src="com.google.firebase:firebase-ads:9.0.2" />
         <framework src="src/platforms/android/build-extras.gradle" custom="true" type="gradleReference" />
 
         <!--drawable-->
