@@ -39,10 +39,6 @@ public class BatteryUtils {
     private BatteryUtils() {
     }
 
-    public static String getBatteryFacebookPlacementId(Context context) {
-        return AdUtil.FBAD_ID;
-    }
-
     public static String getNowTimeStr(Context context) {
         Date date = new Date();
         DateFormat mTimeFormat;

@@ -1,10 +1,8 @@
 package com.atwal.wakeup.battery.activity;
 
-import android.Manifest;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.hardware.Camera;
@@ -27,25 +25,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.atwal.wakeup.splash.PermissionsActivity;
-import com.atwal.wakeup.splash.PermissionsChecker;
 import com.atwal.wakeup.splash.Utils;
-import com.bumptech.glide.Glide;
-import com.atwal.wakeup.battery.bean.FacebookNativeAdBean;
 import com.atwal.wakeup.battery.fragment.BatterySettingFragment;
 import com.atwal.wakeup.battery.receiver.LockerReceiver;
 import com.atwal.wakeup.battery.receiver.LockerReceiverCallback;
 import com.atwal.wakeup.battery.receiver.PhoneCallReceiver;
-import com.atwal.wakeup.battery.util.AdUtil;
 import com.atwal.wakeup.battery.util.BatteryUtils;
-import com.atwal.wakeup.battery.util.FacebookAdCallbackDtail;
 import com.atwal.wakeup.battery.util.SettingsHelper;
 import com.atwal.wakeup.battery.util.Utilities;
 import com.atwal.wakeup.battery.view.FlashTextView;
 import com.atwal.wakeup.battery.view.SwipeBackActivity;
 import com.atwal.wakeup.battery.view.SwipeBackLayout;
-import com.facebook.ads.Ad;
-import com.facebook.ads.AdError;
-import com.facebook.ads.NativeAd;
 import com.thehotgame.bottleflip.R;
 
 import com.google.android.gms.ads.AdListener;
@@ -54,7 +44,7 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.android.gms.ads.VideoController;
 import com.google.android.gms.ads.VideoOptions;
-import android.net.Uri;
+
 import android.widget.Toast;
 
 import java.util.Date;
@@ -81,7 +71,6 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
     private FrameLayout mDragAdViewLayout = null;
     private LockerReceiver mLockerReceiver;
     private Resources mResources;
-    private NativeAd nativeAd;
     private TextView mBatteryAppName;
     private static final String SHOW_ADS_KEY = "SHOW_ADS_KEY";
     private static long ONE_DAY = 1000 * 60 * 60 * 24;
@@ -89,11 +78,9 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
     private TextView mToolbar;
     public static Camera cam = null;
     private static int PERMISSION_REQUEST_CODE = 1001;
-    private static boolean bShowAdmob = false;
-    private static boolean bFbAdFirst = false;
 
     public static void start(Context context) {
-        int screenShowDelayTime = 3 * 60 * 60 * 1000;
+        int screenShowDelayTime = 60 * 60 * 1000;
         Log.d("screenLock", "now:" + new Date().getTime() +
                 " first:" + Utils.getLongValue(context, Utils.KEY_SERVER_FIRST_TIME) +
                 " div:" + (new Date().getTime() - Utils.getLongValue(context, Utils.KEY_SERVER_FIRST_TIME)) +
@@ -156,12 +143,7 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
         mChargingBlurIv.setImageBitmap(BatteryUtils.getBlurBg(mWallpaperManager));
         mBatteryAppName.setText(R.string.app_name);
         refreshTime();
-        bFbAdFirst = Utils.isFbAdFirst(getApplicationContext());
-        if (bFbAdFirst) {
-            initAd();
-        } else {
-            initAdmob();
-        }
+        initAdmob();
         registerBatteryReceiver();
         initEvent();
     }
@@ -199,82 +181,15 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
         mBatteryPgFlashlightTv.setText(String.format(getString(R.string.battery_cpu), Utils.getProcessCpuRate()));
     }
 
-    private void initAd() {
-        Log.d("screenLock", "try to load fb ad");
-        bShowAdmob = false;
-        mAdMainRl = (RelativeLayout) findViewById(R.id.battery_ad_main_rl);
-        mAdCoverImg = (ImageView) findViewById(R.id.battery_ad_iv);
-        mAdIconImg = (ImageView) findViewById(R.id.battery_ad_icon);
-        mAdTitle = (TextView) findViewById(R.id.battery_ad_title);
-        mAdSubTitle = (TextView) findViewById(R.id.tv_ad_subtitle);
-        mAdBtn = (Button) findViewById(R.id.btn_ad);
-        if (mDragAdViewLayout == null) {
-            mDragAdViewLayout = (FrameLayout) findViewById(R.id.battery_main_drag_layout);
-        }
-        mDragAdViewLayout.setVisibility(View.VISIBLE);
-        String placementId = BatteryUtils.getBatteryFacebookPlacementId(this);
-        if (placementId.equals("FBADID")) {
-            Toast.makeText(this, "FB ad id error", Toast.LENGTH_LONG).show();
-            return;
-        }
-        AdUtil.loadNativeAd(this, placementId, new FacebookAdCallbackDtail() {
-            @Override
-            public void onNativeAdLoaded(FacebookNativeAdBean facebookNativeAdBean) {
-                try {
-                    ViewGroup.LayoutParams params = mAdCoverImg.getLayoutParams();
-                    int width = Utilities.getScreenWidth(getApplicationContext()) - Utilities.dip2px(getApplicationContext(), 48);
-                    params.height = (int) (width * 9f / 16);
-                    mAdCoverImg.setLayoutParams(params);
-                    String textForAdTitle = facebookNativeAdBean.title;
-                    String coverImgUrl = facebookNativeAdBean.coverImgUrl;
-                    String iconForAdUrl = facebookNativeAdBean.iconForAdUrl;
-                    String actionBtnText = facebookNativeAdBean.actionBtnText;
-                    String subText = facebookNativeAdBean.subTitle;
-                    nativeAd = facebookNativeAdBean.nativeAd;
-                    mAdTitle.setText(textForAdTitle);
-                    mAdSubTitle.setText(subText);
-                    mAdBtn.setText(actionBtnText);
-                    Glide.with(getApplicationContext()).load(coverImgUrl).into(mAdCoverImg);
-                    Glide.with(getApplicationContext()).load(iconForAdUrl).into(mAdIconImg);
-                    facebookNativeAdBean.nativeAd.registerViewForInteraction(mDragAdViewLayout);
-                    showAdsAnim();
-                } catch (Exception e) {
-                    if (bFbAdFirst) {
-                        initAdmob();
-                    }
-                }
-            }
-
-            @Override
-            public void onNativeAdLoadError(AdError adError) {
-                Log.d("screenLock", "fb ad error:" + adError.getErrorMessage());
-                if (bFbAdFirst) {
-                    initAdmob();
-                }
-            }
-
-            @Override
-            public void onNativeAdClick(Ad ad) {
-                ad.destroy();
-                removeAdsAnim(false);
-            }
-        });
-    }
-
     private void initAdmob() {
         Log.d("screenLock", "try to load admob ad");
-        bShowAdmob = true;
         if (mDragAdViewLayout == null) {
             mDragAdViewLayout = (FrameLayout) findViewById(R.id.battery_main_drag_layout);
         }
         mDragAdViewLayout.setVisibility(View.GONE);
         LinearLayout adWrap = (LinearLayout) findViewById(R.id.ad_wrap);
         final NativeExpressAdView adView = new NativeExpressAdView(BatteryActivity.this);
-        if (AdUtil.ADMOB_ID.contains("ADMOBID")) {
-            Toast.makeText(this, "ADMOB id error", Toast.LENGTH_LONG).show();
-            return;
-        }
-        adView.setAdUnitId(AdUtil.ADMOB_ID);
+        adView.setAdUnitId("ca-app-pub-6491984961722312/1203696589");
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int screenWidth = dm.widthPixels;
@@ -310,22 +225,11 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
 
             @Override
             public void onAdFailedToLoad(int i) {
-                if (!bFbAdFirst) {
-                    adView.setVisibility(View.GONE);
-                    initAd();
-                }
             }
         });
 
         AdRequest request = new AdRequest.Builder().build();
         adView.loadAd(request);
-    }
-
-    private boolean isShowAd() {
-        long current = System.currentTimeMillis();
-        boolean isShowTime = (current - SettingsHelper.getPreferenceLong(getApplicationContext(), SHOW_ADS_KEY, 0)) > ONE_DAY;
-        //return isShowTime;
-        return true;
     }
 
     public void setEnablePullToBack(boolean isEnable) {
@@ -393,51 +297,6 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
         }
     }
 
-
-    private void showAdsAnim() {
-        if (!bShowAdmob) {
-            mAdMainRl.setVisibility(View.VISIBLE);
-            mDragAdViewLayout.setBackgroundResource(R.drawable.bg_ad_screen);
-            findViewById(R.id.iv_ad_txt).setVisibility(View.VISIBLE);
-        }
-//        Animator animator3 = AnimatorInflater.loadAnimator(this, R.animator.battery_pb_layout_trans_y);
-//        animator3.setTarget(mChargingStateMainLl);
-//        AnimatorSet animatorSet = new AnimatorSet();
-//        animatorSet.playTogether(animator3);
-//        animatorSet.start();
-//        animatorSet.addListener(new AnimatorListenerAdapter() {
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                super.onAnimationEnd(animation);
-//                mDragAdViewLayout.setVisibility(View.VISIBLE);
-//            }
-//        });
-    }
-
-    private void removeAdsAnim(final boolean isRemove) {
-        if (!bShowAdmob) {
-            mDragAdViewLayout.setBackgroundResource(android.R.color.transparent);
-            mDragAdViewLayout.setVisibility(View.GONE);
-        }
-//        Animator animator3 = AnimatorInflater.loadAnimator(this, R.animator.battery_pb_layout_trans_y_reset);
-//        animator3.setTarget(mChargingStateMainLl);
-//
-//        AnimatorSet animatorSet = new AnimatorSet();
-//        animatorSet.playTogether(animator3);
-//        animatorSet.start();
-//        animatorSet.addListener(new AnimatorListenerAdapter() {
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                super.onAnimationEnd(animation);
-//                if (isRemove) {
-//                    SettingsHelper.setPreferenceLong(getApplicationContext(), SHOW_ADS_KEY, System.currentTimeMillis());
-//                } else {
-//                    mDragAdViewLayout.moveToOriginal();
-//                }
-//            }
-//        });
-    }
-
     private void getDyedDrawableToProgressTextView(int percent) {
         if (percent == 100) {
             mBatteryPgSpeedTv.setBackgroundResource(R.drawable.icon_screen_battery_full);
@@ -464,9 +323,6 @@ public class BatteryActivity extends SwipeBackActivity implements LockerReceiver
             mBatteryPgFlashlightTv.setBackgroundResource(R.drawable.icon_screen_flashlight);
         }
         mLockerReceiver.unregisterLockerReceiver(this);
-        if (nativeAd != null) {
-            nativeAd.destroy();
-        }
     }
 
     @Override
