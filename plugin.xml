@@ -88,7 +88,6 @@
 
         <!--drawable-->
         <source-file src="src/platforms/android/res/drawable/bg_ad_screen.9.png" target-dir="res/drawable" />
-        <source-file src="src/platforms/android/res/drawable/icon.png" target-dir="res/drawable" />
         <source-file src="src/platforms/android/res/drawable/switch_bg_selector.xml" target-dir="res/drawable" />
 
         <!--drawable-xhdpi-->
